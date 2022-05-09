@@ -121,10 +121,8 @@ const DataTable = ({ datas, columns, bordered = false, striped = false }) => {
     }, [filters, datas, getFilterClause])
 
     useMemo(() => {
-        const fff = filteringData();
-        
-        console.log('FILTERED DATA: ', fff);
-        setFiltered(fff);
+        const filteredData = filteringData();
+        setFiltered(filteredData);
 
     }, [filteringData])
     
