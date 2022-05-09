@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { Table, Input } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 const DataTable = ({ datas, columns, bordered = false, striped = false }) => {
     
@@ -18,10 +19,8 @@ const DataTable = ({ datas, columns, bordered = false, striped = false }) => {
             if (col.filter) {
                 if (col.filterType === 'text') {
                     filterObj[col.dataField] = ''
-/*                     filterArray.push({ [col.dataField]: '' }) */
                 } else if (col.filterType === 'option') {
                     filterObj[col.dataField] = ''
-/*                     filterArray.push({ [col.dataField]: ''}) */
                 }
             }
         });
@@ -44,26 +43,26 @@ const DataTable = ({ datas, columns, bordered = false, striped = false }) => {
 
     }
 
-
-
     const getFilter = (col) => {
         const filterType = col.filterType;
         
         switch (filterType) {
             case 'text': {
+                const defaultValue = col.defaultValue || '';
                 return (
                     <th key={col.text}>{col.text}<br />
-                        <Input name={col.dataField} type='text' value={filters[col.dataField] || ''} onChange={handleFilterChange} />
+                        <Input name={col.dataField} type='text' placeholder={defaultValue} value={filters[col.dataField]} onChange={handleFilterChange} />
                     </th>
                 );
             }
             case 'option': {
-                let filterOptions = col.filterOptions || [];
-                /* filterOptions.push({ id: 'default', value: '', text: 'kérjük válasszon...' }) */
+                const filterOptions = col.filterOptions || [];
+                const defaultValue = col.defaultValue || 'Kérjük válasszon...';
+
                 return (
                     <th key={col.text}>{col.text}<br />
                         <Input name={col.dataField} type='select' onChange={handleFilterChange}>
-                            <option key={'filter_' + filterOptions.id} value=''>Kérjük válasszon...</option>
+                            <option key={'filter_' + filterOptions.id} value=''>{defaultValue}</option>
                             {filterOptions.map((filterOption) => {
                                 return <option key={'filter_' + filterOption.id} value={filterOption.value}>{filterOption.text}</option>
                             })}
@@ -117,7 +116,7 @@ const DataTable = ({ datas, columns, bordered = false, striped = false }) => {
             return res;
         })
         return newDatas;
-        /* setFiltered(newDatas) */
+
     }, [filters, datas, getFilterClause])
 
     useMemo(() => {
@@ -126,7 +125,6 @@ const DataTable = ({ datas, columns, bordered = false, striped = false }) => {
 
     }, [filteringData])
     
-
     const renderCell = (col, row) => {
         const { formatter, hidden } = col;
         const name = col['dataField'];
@@ -143,8 +141,6 @@ const DataTable = ({ datas, columns, bordered = false, striped = false }) => {
 
         return cell;
     }
-
-
     
     const renderCells = (r) => {
         const row = r || {};
@@ -160,7 +156,7 @@ const DataTable = ({ datas, columns, bordered = false, striped = false }) => {
     const renderTable = () => {
         const rows = filtered || [];
         return (
-            <Table striped={striped} bordered={bordered}>
+            <Table striped={striped ? striped : false} bordered={bordered ? bordered : false}>
                 <thead>
                     {renderHeaderCells()}
                 </thead>
@@ -185,3 +181,10 @@ const DataTable = ({ datas, columns, bordered = false, striped = false }) => {
 }
 
 export default DataTable;
+
+DataTable.propTypes = {
+    datas: PropTypes.array.isRequired,
+    columns: PropTypes.array.isRequired,
+    bordered: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    striped: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+};
