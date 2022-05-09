@@ -132,7 +132,7 @@ const DataTable = ({ datas, columns, bordered = false, striped = false }) => {
 
         if (col && row && !hidden) {
             if (formatter && typeof formatter === 'function') {
-                cell = col.formatter(col, row);
+                cell = <td key={'cell_' + row.id}>{col.formatter(col, row)}</td>
             } 
             else {
                 cell = <td key={'cell_' + name + row.id}>{row[name]}</td>;
