@@ -13,6 +13,10 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactstrap = require("reactstrap");
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -42,10 +46,8 @@ const DataTable = _ref => {
       if (col.filter) {
         if (col.filterType === 'text') {
           filterObj[col.dataField] = '';
-          /*                     filterArray.push({ [col.dataField]: '' }) */
         } else if (col.filterType === 'option') {
           filterObj[col.dataField] = '';
-          /*                     filterArray.push({ [col.dataField]: ''}) */
         }
       }
     });
@@ -74,21 +76,22 @@ const DataTable = _ref => {
     switch (filterType) {
       case 'text':
         {
+          const defaultValue = col.defaultValue || '';
           return /*#__PURE__*/_react.default.createElement("th", {
             key: col.text
           }, col.text, /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(_reactstrap.Input, {
             name: col.dataField,
             type: "text",
-            value: filters[col.dataField] || '',
+            placeholder: defaultValue,
+            value: filters[col.dataField],
             onChange: handleFilterChange
           }));
         }
 
       case 'option':
         {
-          let filterOptions = col.filterOptions || [];
-          /* filterOptions.push({ id: 'default', value: '', text: 'kérjük válasszon...' }) */
-
+          const filterOptions = col.filterOptions || [];
+          const defaultValue = col.defaultValue || 'Kérjük válasszon...';
           return /*#__PURE__*/_react.default.createElement("th", {
             key: col.text
           }, col.text, /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(_reactstrap.Input, {
@@ -98,7 +101,7 @@ const DataTable = _ref => {
           }, /*#__PURE__*/_react.default.createElement("option", {
             key: 'filter_' + filterOptions.id,
             value: ""
-          }, "K\xE9rj\xFCk v\xE1lasszon..."), filterOptions.map(filterOption => {
+          }, defaultValue), filterOptions.map(filterOption => {
             return /*#__PURE__*/_react.default.createElement("option", {
               key: 'filter_' + filterOption.id,
               value: filterOption.value
@@ -154,7 +157,6 @@ const DataTable = _ref => {
       return res;
     });
     return newDatas;
-    /* setFiltered(newDatas) */
   }, [filters, datas, getFilterClause]);
   (0, _react.useMemo)(() => {
     const filteredData = filteringData();
@@ -193,8 +195,8 @@ const DataTable = _ref => {
   const renderTable = () => {
     const rows = filtered || [];
     return /*#__PURE__*/_react.default.createElement(_reactstrap.Table, {
-      striped: striped,
-      bordered: bordered
+      striped: striped ? striped : false,
+      bordered: bordered ? bordered : false
     }, /*#__PURE__*/_react.default.createElement("thead", null, renderHeaderCells()), /*#__PURE__*/_react.default.createElement("tbody", null, rows.map((row, index) => {
       return /*#__PURE__*/_react.default.createElement("tr", {
         key: 'row_' + index.toString()
@@ -207,3 +209,9 @@ const DataTable = _ref => {
 
 var _default = DataTable;
 exports.default = _default;
+DataTable.propTypes = {
+  datas: _propTypes.default.array.isRequired,
+  columns: _propTypes.default.array.isRequired,
+  bordered: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.bool]),
+  striped: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.bool])
+};
