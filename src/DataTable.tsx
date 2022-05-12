@@ -1,11 +1,55 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, CSSProperties, FunctionComponent } from 'react';
 import { Table, Input, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './index.css';
 
-const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }) => {
+interface Datas {}
+
+interface FilterOptions {
+    id: number | string,
+    value: number | string,
+    text: string
+}
+
+interface Columns {
+    dataField: string,
+    text: string,
+    filter?: boolean,
+    filterType?: string,
+    filterOptions?: FilterOptions[]
+    formatter?: FunctionComponent
+    hidden?: boolean
+}
+
+interface RowPerPageOptions {
+    value: number,
+    text: string
+}
+
+interface PaginationOptions {
+    color?: string,
+    count: number,
+    nextText?: string,
+    previousText?: string,
+    firstPageText?: string,
+    lastPageText?: string,
+    rowPerPageOptions?: RowPerPageOptions[]
+}
+
+interface DataTableProps {
+    className?: string,
+    datas: Datas[],
+    columns: Columns[],
+    paginationOptions?: PaginationOptions,
+    bordered?: boolean,
+    striped?: boolean
+}
+
+type Filters = any;
+
+const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }: DataTableProps) => {
     
-    const [ filters, setFilters ] = useState({});
+    const [ filters, setFilters ] = useState<Filters>({});
     const [ filtered, setFiltered ] = useState([]);
     const [ count, setCount ] = useState(paginationOptions && paginationOptions.count ? paginationOptions.count : 5);
     const [ currentPage, setCurrentPage ] = useState(0);
@@ -21,14 +65,15 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
 
     const setDefaultFilters = useCallback(() => {
         const cols = columns || [];
-        let filterObj = {};
+
+        let filterObj: object = {};
 
         cols.forEach((col) => {
             if (col.filter) {
-                if (col.filterType === 'text') {
-                    filterObj[col.dataField] = ''
-                } else if (col.filterType === 'option') {
-                    filterObj[col.dataField] = ''
+                if (col.filterType === 'textFilter') {
+                    filterObj = Object.assign({[col.dataField]: ''}, filterObj)
+                } else if (col.filterType === 'optionFilter') {
+                    filterObj = Object.assign({[col.dataField]: ''}, filterObj)
                 }
             }
         });
@@ -40,7 +85,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         setDefaultFilters();
     }, [setDefaultFilters])
 
-    const handleFilterChange = (e) => {
+    const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { target } = e;
         const { name, value } = target;
 
@@ -51,7 +96,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
 
     }
 
-    const getFilter = (col) => {
+    const getFilter = (col: any) => {
         const filterType = col.filterType;
         
         switch (filterType) {
@@ -71,7 +116,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
                     <th key={col.text}>{col.text}<br />
                         <Input name={col.dataField} type='select' onChange={handleFilterChange}>
                             <option key={'filter_' + filterOptions.id} value=''>{defaultValue}</option>
-                            {filterOptions.map((filterOption) => {
+                            {filterOptions.map((filterOption: any) => {
                                 return <option key={'filter_' + filterOption.id} value={filterOption.value}>{filterOption.text}</option>
                             })}
                         </Input>
@@ -86,25 +131,22 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
 
     const renderHeaderCells = () => {
         const cols = columns || [];
-        let cell = '';
+
         return (
             <tr>
                 {cols.map((col) => {
-                    if (!col.hidden) {
-                        cell = getFilter(col);
-                    }
-                    return cell;
+                    return !col.hidden && getFilter(col);
                 })}
             </tr>
         );
     }
 
-    const getFilterClause = useCallback((key, rowData) => {
+    const getFilterClause = useCallback((key: any, rowData: any) => {
         const ccc = columns.find((c) => c['dataField'] === key);
-        if (ccc.filterType === 'text') {
+        if (ccc.filterType === 'textFilter') {
             return rowData[key].toLowerCase().indexOf(filters[key].toLowerCase()) === -1;
         } 
-        if (ccc.filterType === 'option') {
+        if (ccc.filterType === 'optionFilter') {
             return rowData[key] !== filters[key];
         }
     }, [columns, filters]);
@@ -129,19 +171,19 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
     }, [filters, datas, getFilterClause])
 
     const getFirstIndex = useCallback(() => {
-        const cP = parseInt(currentPage, 10);
+        const cP = currentPage;
         const firstIndex = ((cP - 2) < 0) ? 0 : (cP - 2); 
         return firstIndex;
     }, [currentPage])
 
     const getLastIndex = useCallback(() => {
         const pageCount = pageButtons.length;
-        const cP = parseInt(currentPage, 10);
+        const cP = currentPage;
         const lastIndex = ((cP + 3) > pageCount) ? pageCount : (cP + 3);
         return lastIndex;
     }, [currentPage, pageButtons.length]);
 
-    const createPageButtons = useCallback((filteredData) => {
+    const createPageButtons = useCallback((filteredData: Array<object>) => {
         const length = filteredData.length;
         const pageCount = Math.ceil(length / count);
         let pageButtonsArray = [];
@@ -155,9 +197,9 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
 
     }, [count])
 
-    const handlePageChange = useCallback((filteredData) => {
+    const handlePageChange = useCallback((filteredData: any) => {
         const firstIndex = count * currentPage;
-        const lastIndex = firstIndex + parseInt(count, 10);
+        const lastIndex = firstIndex + count;
         let filteredArray = [];
 
         for (let i = firstIndex ; i < lastIndex ; i++) {
@@ -175,24 +217,24 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         createPageButtons(filteredData);
     }, [filteringData, handlePageChange, createPageButtons])
     
-    const renderCell = (col, row) => {
+    const renderCell = (col: any, row: any) => {
         const { formatter, hidden } = col;
         const name = col['dataField'];
         let cell = '';
 
         if (col && row && !hidden) {
             if (formatter && typeof formatter === 'function') {
-                cell = <td key={'cell_' + row.id}>{col.formatter(col, row)}</td>
+                return <td key={'cell_' + row.id}>{col.formatter(col, row)}</td>
             } 
             else {
-                cell = <td key={'cell_' + name + row.id}>{row[name]}</td>;
+                return <td key={'cell_' + name + row.id}>{row[name]}</td>;
             }
         }
 
         return cell;
     }
     
-    const renderCells = (r) => {
+    const renderCells = (r: any) => {
         const row = r || {};
         const cols = columns || [];
 
@@ -239,18 +281,19 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         setCurrentPage(pageButtons.length - 1)
     }
 
-    const onPageClick = (pageNumber) => {
+    const onPageClick = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     }
 
-    const renderRowPerPage = (rowPerPageOptions) => {
-        const defaultRowPerPageStyle = {
+    const renderRowPerPage = (rowPerPageOptions: any ) => {
+
+        const defaultRowPerPageStyle: CSSProperties = {
             width: 'fit-content',
             float: 'left'
         }
 
         return (
-            <Input className='react-data-table-pagination-rowperpage' style={defaultRowPerPageStyle} type='select' value={count} onChange={(e) => { setCount(e.target.value); setCurrentPage(0) }}>
+            <Input className='react-data-table-pagination-rowperpage' style={defaultRowPerPageStyle} type='select' value={count} onChange={(e) => { setCount(parseInt(e.target.value, 10)); setCurrentPage(0) }}>
                 {rowPerPageOptions && Array.isArray(rowPerPageOptions) && rowPerPageOptions.length > 0 && (
                     rowPerPageOptions.map((opt) => {
                         const { value, text } = opt;
@@ -263,18 +306,17 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         );
     }
 
-    const renderPageButtons = (color, nextText, previousText, firstPageText, lastPageText) => {
+    const renderPageButtons = (color: string, nextText: string, previousText: string, firstPageText: string, lastPageText: string) => {
 
-        const defaultPageButtonsStyle = {
+        const defaultPageButtonsStyle: CSSProperties = {
             float: 'right'
         }
         const firstIndex = getFirstIndex();
         const lastIndex = getLastIndex();
-        let item = ''
         let buttons = []
         for (let i = firstIndex ; i < lastIndex ; i++) {
-            item = <Button color={color} outline={currentPage !== pageButtons[i].key} key={pageButtons[i].key} onClick={pageButtons[i].onClick}>{pageButtons[i].text}</Button>;
-            buttons.push(item)
+
+            buttons.push(<Button color={color} outline={currentPage !== pageButtons[i].key} key={pageButtons[i].key} onClick={pageButtons[i].onClick}>{pageButtons[i].text}</Button>)
         }
 
         return (
@@ -296,7 +338,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         if (paginationOptions && typeof paginationOptions === 'object' && filtered.length > 0) {
             const { color, nextText = '>', previousText = '<', firstPageText = '<<', lastPageText = '>>', rowPerPageOptions } = paginationOptions;
             
-            const defaultPaginationStyle = {
+            const defaultPaginationStyle: CSSProperties = {
                 width: '100%',
                 clear: 'both'
             }
