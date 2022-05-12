@@ -1,13 +1,13 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
+/* import React from 'react';
+import { createRoot } from 'react-dom/client'; */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-import datas from './datas';
-import columns from './columns';
+/* import datas from './datas';
+import columns from './columns'; */
 import DataTable from './DataTable';
 
-const root = createRoot(document.getElementById('root'));
+/* const root = createRoot(document.getElementById('root'));
 const paginationOptions = {
     color: 'primary', count: 5, nextText: '>', previousText: '<', firstPageText: '<<', lastPageText: '>>', rowPerPageOptions: [
         {
@@ -24,7 +24,7 @@ const paginationOptions = {
         },
     ]
 }
-root.render(<DataTable bordered datas={datas} columns={columns} paginationOptions={paginationOptions} />);
+root.render(<DataTable bordered datas={datas} columns={columns} paginationOptions={paginationOptions} />); */
 
 
 export { DataTable }
