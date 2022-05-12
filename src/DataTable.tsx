@@ -3,8 +3,12 @@ import { Table, Input, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { any } from 'prop-types';
 
-interface Datas {}
+interface Datas {
+    length: number;
+    map(arg0: (row: any) => JSX.Element): React.ReactNode;
+}
 
 interface FilterOptions {
     id: number | string,
@@ -28,7 +32,7 @@ interface RowPerPageOptions {
 }
 
 interface PaginationOptions {
-    color?: string,
+    color?: any,
     count: number,
     nextText?: string,
     previousText?: string,
@@ -39,22 +43,24 @@ interface PaginationOptions {
 
 interface DataTableProps {
     className?: string,
-    datas: Datas[],
+    datas: Array<object>,
     columns: Columns[],
     paginationOptions?: PaginationOptions,
     bordered?: boolean,
     striped?: boolean
 }
 
+type PageButtons = any; 
+
 type Filters = any;
 
 const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }: DataTableProps) => {
     
     const [ filters, setFilters ] = useState<Filters>({});
-    const [ filtered, setFiltered ] = useState([]);
+    const [ filtered, setFiltered ] = useState<Datas>([]);
     const [ count, setCount ] = useState(paginationOptions && paginationOptions.count ? paginationOptions.count : 5);
     const [ currentPage, setCurrentPage ] = useState(0);
-    const [ pageButtons, setPageButtons ] = useState([]);
+    const [ pageButtons, setPageButtons ] = useState<PageButtons>([]);
 
     useEffect(() => {
         setFiltered(datas);
@@ -144,10 +150,10 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
 
     const getFilterClause = useCallback((key: any, rowData: any) => {
         const ccc = columns.find((c) => c['dataField'] === key);
-        if (ccc.filterType === 'textFilter') {
+        if (ccc && ccc.filterType === 'textFilter') {
             return rowData[key].toLowerCase().indexOf(filters[key].toLowerCase()) === -1;
         } 
-        if (ccc.filterType === 'optionFilter') {
+        if (ccc && ccc.filterType === 'optionFilter') {
             return rowData[key] !== filters[key];
         }
     }, [columns, filters]);
@@ -187,7 +193,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
     const createPageButtons = useCallback((filteredData: Array<object>) => {
         const length = filteredData.length;
         const pageCount = Math.ceil(length / count);
-        let pageButtonsArray = [];
+        let pageButtonsArray: Array<object> = [];
         for (let i = 0; i < pageCount; i++) {
             pageButtonsArray.push({ key: i, onClick: () => onPageClick(i), text: i+1 })
         }
@@ -247,14 +253,14 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
     }
 
     const renderTable = () => {
-        const rows = filtered || [];
+        const rows: any[] | Datas = filtered || [];
         return (
             <Table className={className} striped={striped ? striped : false} bordered={bordered ? bordered : false}>
                 <thead>
                     {renderHeaderCells()}
                 </thead>
                 <tbody>
-                    {rows.map((row) => {
+                    {rows.map((row: any) => {
                         return (
                             <tr key={'row_' + row.id}>
                                 {renderCells(row)}
