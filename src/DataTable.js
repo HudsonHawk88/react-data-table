@@ -324,14 +324,14 @@ DataTable.propTypes = {
     className: PropTypes.string,
     datas: PropTypes.array.isRequired,
     columns: PropTypes.array.isRequired,
-    paginationOptions: PropTypes.exact({
+    paginationOptions: PropTypes.shape({
         color: PropTypes.string,
         count: PropTypes.number.isRequired,
-        nextText: PropTypes.text,
+        nextText: PropTypes.string,
         previousText: PropTypes.string,
         firstPageText: PropTypes.string,
         lastPageText: PropTypes.string,
-        rowPerPageOptions: PropTypes.arrayOf(PropTypes.exact({
+        rowPerPageOptions: PropTypes.arrayOf(PropTypes.shape({
             value: PropTypes.number.isRequired,
             text: PropTypes.string.isRequired
         }))

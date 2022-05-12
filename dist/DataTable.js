@@ -380,14 +380,14 @@ DataTable.propTypes = {
   className: _propTypes.default.string,
   datas: _propTypes.default.array.isRequired,
   columns: _propTypes.default.array.isRequired,
-  paginationOptions: _propTypes.default.exact({
+  paginationOptions: _propTypes.default.shape({
     color: _propTypes.default.string,
     count: _propTypes.default.number.isRequired,
-    nextText: _propTypes.default.text,
+    nextText: _propTypes.default.string,
     previousText: _propTypes.default.string,
     firstPageText: _propTypes.default.string,
     lastPageText: _propTypes.default.string,
-    rowPerPageOptions: _propTypes.default.arrayOf(_propTypes.default.exact({
+    rowPerPageOptions: _propTypes.default.arrayOf(_propTypes.default.shape({
       value: _propTypes.default.number.isRequired,
       text: _propTypes.default.string.isRequired
     }))
