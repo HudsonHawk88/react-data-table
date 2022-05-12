@@ -7,13 +7,15 @@ exports.default = void 0;
 
 require("core-js/modules/web.dom-collections.iterator.js");
 
-require("core-js/modules/es.regexp.to-string.js");
+require("core-js/modules/es.parse-int.js");
 
 var _react = _interopRequireWildcard(require("react"));
 
 var _reactstrap = require("reactstrap");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
+
+require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29,15 +31,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 const DataTable = _ref => {
   let {
+    className = 'react-data-table',
     datas,
     columns,
+    paginationOptions,
     bordered = false,
     striped = false
   } = _ref;
   const [filters, setFilters] = (0, _react.useState)({});
   const [filtered, setFiltered] = (0, _react.useState)([]);
+  const [count, setCount] = (0, _react.useState)(paginationOptions && paginationOptions.count ? paginationOptions.count : 5);
+  const [currentPage, setCurrentPage] = (0, _react.useState)(0);
+  const [pageButtons, setPageButtons] = (0, _react.useState)([]);
   (0, _react.useEffect)(() => {
     setFiltered(datas);
+    /* if (paginationOptions) {
+        setCount(paginationOptions.count || 5);
+    } */
   }, [datas]);
   const setDefaultFilters = (0, _react.useCallback)(() => {
     const cols = columns || [];
@@ -158,10 +168,50 @@ const DataTable = _ref => {
     });
     return newDatas;
   }, [filters, datas, getFilterClause]);
+  const getFirstIndex = (0, _react.useCallback)(() => {
+    const cP = parseInt(currentPage, 10);
+    const firstIndex = cP - 2 < 0 ? 0 : cP - 2;
+    return firstIndex;
+  }, [currentPage]);
+  const getLastIndex = (0, _react.useCallback)(() => {
+    const pageCount = pageButtons.length;
+    const cP = parseInt(currentPage, 10);
+    const lastIndex = cP + 3 > pageCount ? pageCount : cP + 3;
+    return lastIndex;
+  }, [currentPage, pageButtons.length]);
+  const createPageButtons = (0, _react.useCallback)(filteredData => {
+    const length = filteredData.length;
+    const pageCount = Math.ceil(length / count);
+    let pageButtonsArray = [];
+
+    for (let i = 0; i < pageCount; i++) {
+      pageButtonsArray.push({
+        key: i,
+        onClick: () => onPageClick(i),
+        text: i + 1
+      });
+    }
+
+    setPageButtons(pageButtonsArray);
+  }, [count]);
+  const handlePageChange = (0, _react.useCallback)(filteredData => {
+    const firstIndex = count * currentPage;
+    const lastIndex = firstIndex + parseInt(count, 10);
+    let filteredArray = [];
+
+    for (let i = firstIndex; i < lastIndex; i++) {
+      if (filteredData[i]) {
+        filteredArray.push(filteredData[i]);
+      }
+    }
+
+    setFiltered(filteredArray);
+  }, [count, currentPage]);
   (0, _react.useMemo)(() => {
     const filteredData = filteringData();
-    setFiltered(filteredData);
-  }, [filteringData]);
+    handlePageChange(filteredData);
+    createPageButtons(filteredData);
+  }, [filteringData, handlePageChange, createPageButtons]);
 
   const renderCell = (col, row) => {
     const {
@@ -173,7 +223,9 @@ const DataTable = _ref => {
 
     if (col && row && !hidden) {
       if (formatter && typeof formatter === 'function') {
-        cell = col.formatter(col, row);
+        cell = /*#__PURE__*/_react.default.createElement("td", {
+          key: 'cell_' + row.id
+        }, col.formatter(col, row));
       } else {
         cell = /*#__PURE__*/_react.default.createElement("td", {
           key: 'cell_' + name + row.id
@@ -195,23 +247,141 @@ const DataTable = _ref => {
   const renderTable = () => {
     const rows = filtered || [];
     return /*#__PURE__*/_react.default.createElement(_reactstrap.Table, {
+      className: className,
       striped: striped ? striped : false,
       bordered: bordered ? bordered : false
-    }, /*#__PURE__*/_react.default.createElement("thead", null, renderHeaderCells()), /*#__PURE__*/_react.default.createElement("tbody", null, rows.map((row, index) => {
+    }, /*#__PURE__*/_react.default.createElement("thead", null, renderHeaderCells()), /*#__PURE__*/_react.default.createElement("tbody", null, rows.map(row => {
       return /*#__PURE__*/_react.default.createElement("tr", {
-        key: 'row_' + index.toString()
+        key: 'row_' + row.id
       }, renderCells(row));
     })));
   };
 
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, renderTable());
+  const onNextClick = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const onPreviousClick = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const onFirstClick = () => {
+    setCurrentPage(0);
+  };
+
+  const onLastClick = () => {
+    setCurrentPage(pageButtons.length - 1);
+  };
+
+  const onPageClick = pageNumber => {
+    setCurrentPage(pageNumber);
+  };
+
+  const renderRowPerPage = rowPerPageOptions => {
+    const defaultRowPerPageStyle = {
+      width: 'fit-content',
+      float: 'left'
+    };
+    return /*#__PURE__*/_react.default.createElement(_reactstrap.Input, {
+      className: "react-data-table-pagination-rowperpage",
+      style: defaultRowPerPageStyle,
+      type: "select",
+      value: count,
+      onChange: e => {
+        setCount(e.target.value);
+        setCurrentPage(0);
+      }
+    }, rowPerPageOptions && Array.isArray(rowPerPageOptions) && rowPerPageOptions.length > 0 && rowPerPageOptions.map(opt => {
+      const {
+        value,
+        text
+      } = opt;
+      return /*#__PURE__*/_react.default.createElement("option", {
+        key: value,
+        value: value
+      }, text);
+    }));
+  };
+
+  const renderPageButtons = (color, nextText, previousText, firstPageText, lastPageText) => {
+    const defaultPageButtonsStyle = {
+      float: 'right'
+    };
+    const firstIndex = getFirstIndex();
+    const lastIndex = getLastIndex();
+    let item = '';
+    let buttons = [];
+
+    for (let i = firstIndex; i < lastIndex; i++) {
+      item = /*#__PURE__*/_react.default.createElement(_reactstrap.Button, {
+        color: color,
+        outline: currentPage !== pageButtons[i].key,
+        key: pageButtons[i].key,
+        onClick: pageButtons[i].onClick
+      }, pageButtons[i].text);
+      buttons.push(item);
+    }
+
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "react-data-table-pagination-buttons",
+      style: defaultPageButtonsStyle
+    }, /*#__PURE__*/_react.default.createElement(_reactstrap.Button, {
+      outline: true,
+      color: color,
+      hidden: currentPage === 0,
+      onClick: () => onFirstClick()
+    }, firstPageText), /*#__PURE__*/_react.default.createElement(_reactstrap.Button, {
+      outline: true,
+      color: color,
+      hidden: currentPage === 0,
+      onClick: () => onPreviousClick()
+    }, previousText), buttons.map(butt => {
+      return butt;
+    }), /*#__PURE__*/_react.default.createElement(_reactstrap.Button, {
+      outline: true,
+      color: color,
+      hidden: currentPage === pageButtons.length - 1,
+      onClick: () => onNextClick()
+    }, nextText), /*#__PURE__*/_react.default.createElement(_reactstrap.Button, {
+      outline: true,
+      color: color,
+      hidden: currentPage === pageButtons.length - 1,
+      onClick: () => onLastClick()
+    }, lastPageText));
+  };
+
+  const renderPagination = () => {
+    if (paginationOptions && typeof paginationOptions === 'object' && filtered.length > 0) {
+      const {
+        color,
+        nextText,
+        previousText,
+        firstPageText,
+        lastPageText,
+        rowPerPageOptions
+      } = paginationOptions;
+      const defaultPaginationStyle = {
+        width: '100%',
+        clear: 'both',
+        padding: '10px'
+      };
+      return /*#__PURE__*/_react.default.createElement("div", {
+        className: "react-data-table-paginator",
+        style: defaultPaginationStyle
+      }, renderRowPerPage(rowPerPageOptions), renderPageButtons(color, nextText, previousText, firstPageText, lastPageText));
+    }
+  };
+
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, renderTable(), renderPagination());
 };
 
 var _default = DataTable;
 exports.default = _default;
 DataTable.propTypes = {
+  className: _propTypes.default.string,
   datas: _propTypes.default.array.isRequired,
   columns: _propTypes.default.array.isRequired,
+  paginationOptions: _propTypes.default.object,
   bordered: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.bool]),
   striped: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.bool])
 };

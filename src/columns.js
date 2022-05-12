@@ -1,3 +1,5 @@
+import React from "react";
+
 const columns = [
     {
         dataField: 'name',
@@ -28,7 +30,7 @@ const columns = [
         dataField: 'id',
         text: 'Műveletek',
         formatter: (cell, row) => {
-            return <td key={'cell_id' + row.id}><button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button></td>
+            return <React.Fragment><button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button></React.Fragment>
         }
     }
 ];

@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.react-data-table-pagination-buttons .btn:focus {
+  box-shadow: none !important;
+}
+
+.react-data-table-pagination-buttons .btn:active {
+  box-shadow: none !important;
+}

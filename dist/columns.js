@@ -4,6 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 const columns = [{
   dataField: 'name',
   text: 'Név',
@@ -29,9 +34,7 @@ const columns = [{
   dataField: 'id',
   text: 'Műveletek',
   formatter: (cell, row) => {
-    return /*#__PURE__*/React.createElement("td", {
-      key: 'cell_id' + row.id
-    }, /*#__PURE__*/React.createElement("button", null, row.id), "\xA0\xA0", /*#__PURE__*/React.createElement("button", null, row.id), "\xA0\xA0", /*#__PURE__*/React.createElement("button", null, row.id));
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("button", null, row.id), "\xA0\xA0", /*#__PURE__*/_react.default.createElement("button", null, row.id), "\xA0\xA0", /*#__PURE__*/_react.default.createElement("button", null, row.id));
   }
 }];
 var _default = columns;
