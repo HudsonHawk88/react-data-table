@@ -354,16 +354,15 @@ const DataTable = _ref => {
     if (paginationOptions && typeof paginationOptions === 'object' && filtered.length > 0) {
       const {
         color,
-        nextText,
-        previousText,
-        firstPageText,
-        lastPageText,
+        nextText = '>',
+        previousText = '<',
+        firstPageText = '<<',
+        lastPageText = '>>',
         rowPerPageOptions
       } = paginationOptions;
       const defaultPaginationStyle = {
         width: '100%',
-        clear: 'both',
-        padding: '10px'
+        clear: 'both'
       };
       return /*#__PURE__*/_react.default.createElement("div", {
         className: "react-data-table-paginator",
@@ -381,7 +380,18 @@ DataTable.propTypes = {
   className: _propTypes.default.string,
   datas: _propTypes.default.array.isRequired,
   columns: _propTypes.default.array.isRequired,
-  paginationOptions: _propTypes.default.object,
+  paginationOptions: _propTypes.default.exact({
+    color: _propTypes.default.string,
+    count: _propTypes.default.number.isRequired,
+    nextText: _propTypes.default.text,
+    previousText: _propTypes.default.string,
+    firstPageText: _propTypes.default.string,
+    lastPageText: _propTypes.default.string,
+    rowPerPageOptions: _propTypes.default.arrayOf(_propTypes.default.exact({
+      value: _propTypes.default.number.isRequired,
+      text: _propTypes.default.string.isRequired
+    }))
+  }),
   bordered: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.bool]),
   striped: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.bool])
 };

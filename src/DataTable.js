@@ -294,12 +294,11 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
 
     const renderPagination = () => {
         if (paginationOptions && typeof paginationOptions === 'object' && filtered.length > 0) {
-            const { color, nextText, previousText, firstPageText, lastPageText, rowPerPageOptions } = paginationOptions;
+            const { color, nextText = '>', previousText = '<', firstPageText = '<<', lastPageText = '>>', rowPerPageOptions } = paginationOptions;
             
             const defaultPaginationStyle = {
                 width: '100%',
-                clear: 'both',
-                padding: '10px'
+                clear: 'both'
             }
 
             return (
@@ -325,7 +324,18 @@ DataTable.propTypes = {
     className: PropTypes.string,
     datas: PropTypes.array.isRequired,
     columns: PropTypes.array.isRequired,
-    paginationOptions: PropTypes.object,
+    paginationOptions: PropTypes.exact({
+        color: PropTypes.string,
+        count: PropTypes.number.isRequired,
+        nextText: PropTypes.text,
+        previousText: PropTypes.string,
+        firstPageText: PropTypes.string,
+        lastPageText: PropTypes.string,
+        rowPerPageOptions: PropTypes.arrayOf(PropTypes.exact({
+            value: PropTypes.number.isRequired,
+            text: PropTypes.string.isRequired
+        }))
+    }),
     bordered: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     striped: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 };
