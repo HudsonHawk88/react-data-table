@@ -1,19 +1,47 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { Table, Input, Button } from 'reactstrap';
-import PropTypes from 'prop-types';
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importStar(require("react"));
+const reactstrap_1 = require("reactstrap");
+const prop_types_1 = __importDefault(require("prop-types"));
 const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }) => {
-    const [filters, setFilters] = useState({});
-    const [filtered, setFiltered] = useState([]);
-    const [count, setCount] = useState(paginationOptions && paginationOptions.count ? paginationOptions.count : 5);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [pageButtons, setPageButtons] = useState([]);
-    useEffect(() => {
+    const [filters, setFilters] = (0, react_1.useState)({});
+    const [filtered, setFiltered] = (0, react_1.useState)([]);
+    const [count, setCount] = (0, react_1.useState)(paginationOptions && paginationOptions.count ? paginationOptions.count : 5);
+    const [currentPage, setCurrentPage] = (0, react_1.useState)(0);
+    const [pageButtons, setPageButtons] = (0, react_1.useState)([]);
+    (0, react_1.useEffect)(() => {
         setFiltered(datas);
         /* if (paginationOptions) {
             setCount(paginationOptions.count || 5);
         } */
     }, [datas]);
-    const setDefaultFilters = useCallback(() => {
+    const setDefaultFilters = (0, react_1.useCallback)(() => {
         const cols = columns || [];
         let filterObj = {};
         cols.forEach((col) => {
@@ -28,13 +56,16 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         });
         setFilters(filterObj);
     }, [columns]);
-    useEffect(() => {
+    (0, react_1.useEffect)(() => {
         setDefaultFilters();
     }, [setDefaultFilters]);
     const handleFilterChange = (e) => {
         const { target } = e;
         const { name, value } = target;
-        setFilters(Object.assign(Object.assign({}, filters), { [name]: value }));
+        setFilters({
+            ...filters,
+            [name]: value
+        });
     };
     const getFilter = (col) => {
         const filterType = col.filterType;
@@ -42,19 +73,19 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
             case 'textFilter': {
                 const defaultValue = col.defaultValue || '';
                 return (<th key={col.text}>{col.text}<br />
-                        <Input name={col.dataField} type='text' placeholder={defaultValue} value={filters[col.dataField]} onChange={handleFilterChange}/>
+                        <reactstrap_1.Input name={col.dataField} type='text' placeholder={defaultValue} value={filters[col.dataField]} onChange={handleFilterChange}/>
                     </th>);
             }
             case 'optionFilter': {
                 const filterOptions = col.filterOptions || [];
                 const defaultValue = col.defaultValue || 'Kérjük válasszon...';
                 return (<th key={col.text}>{col.text}<br />
-                        <Input name={col.dataField} type='select' onChange={handleFilterChange}>
+                        <reactstrap_1.Input name={col.dataField} type='select' onChange={handleFilterChange}>
                             <option key={'filter_' + filterOptions.id} value=''>{defaultValue}</option>
                             {filterOptions.map((filterOption) => {
                         return <option key={'filter_' + filterOption.id} value={filterOption.value}>{filterOption.text}</option>;
                     })}
-                        </Input>
+                        </reactstrap_1.Input>
                     </th>);
             }
             default: {
@@ -70,7 +101,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
             })}
             </tr>);
     };
-    const getFilterClause = useCallback((key, rowData) => {
+    const getFilterClause = (0, react_1.useCallback)((key, rowData) => {
         const ccc = columns.find((c) => c['dataField'] === key);
         if (ccc && ccc.filterType === 'textFilter') {
             return rowData[key].toLowerCase().indexOf(filters[key].toLowerCase()) === -1;
@@ -82,7 +113,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
             return undefined;
         }
     }, [columns, filters]);
-    const filteringData = useCallback(() => {
+    const filteringData = (0, react_1.useCallback)(() => {
         let newDatas = datas;
         newDatas = datas.filter((rowData) => {
             let res = true;
@@ -97,18 +128,18 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         });
         return newDatas;
     }, [filters, datas, getFilterClause]);
-    const getFirstIndex = useCallback(() => {
+    const getFirstIndex = (0, react_1.useCallback)(() => {
         const cP = currentPage;
         const firstIndex = ((cP - 2) < 0) ? 0 : (cP - 2);
         return firstIndex;
     }, [currentPage]);
-    const getLastIndex = useCallback(() => {
+    const getLastIndex = (0, react_1.useCallback)(() => {
         const pageCount = pageButtons.length;
         const cP = currentPage;
         const lastIndex = ((cP + 3) > pageCount) ? pageCount : (cP + 3);
         return lastIndex;
     }, [currentPage, pageButtons.length]);
-    const createPageButtons = useCallback((filteredData) => {
+    const createPageButtons = (0, react_1.useCallback)((filteredData) => {
         const length = filteredData.length;
         const pageCount = Math.ceil(length / count);
         let pageButtonsArray = [];
@@ -117,7 +148,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         }
         setPageButtons(pageButtonsArray);
     }, [count]);
-    const handlePageChange = useCallback((filteredData) => {
+    const handlePageChange = (0, react_1.useCallback)((filteredData) => {
         const firstIndex = count * currentPage;
         const lastIndex = firstIndex + count;
         let filteredArray = [];
@@ -128,7 +159,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         }
         setFiltered(filteredArray);
     }, [count, currentPage]);
-    useMemo(() => {
+    (0, react_1.useMemo)(() => {
         const filteredData = filteringData();
         handlePageChange(filteredData);
         createPageButtons(filteredData);
@@ -156,7 +187,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
     };
     const renderTable = () => {
         const rows = filtered || [];
-        return (<Table className={className} striped={striped ? striped : false} bordered={bordered ? bordered : false}>
+        return (<reactstrap_1.Table className={className} striped={striped ? striped : false} bordered={bordered ? bordered : false}>
                 <thead>
                     {renderHeaderCells()}
                 </thead>
@@ -167,7 +198,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
                             </tr>);
             })}
                 </tbody>
-            </Table>);
+            </reactstrap_1.Table>);
     };
     const onNextClick = () => {
         setCurrentPage(currentPage + 1);
@@ -189,12 +220,12 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
             width: 'fit-content',
             float: 'left'
         };
-        return (<Input className='react-data-table-pagination-rowperpage' style={defaultRowPerPageStyle} type='select' value={count} onChange={(e) => { setCount(parseInt(e.target.value, 10)); setCurrentPage(0); }}>
+        return (<reactstrap_1.Input className='react-data-table-pagination-rowperpage' style={defaultRowPerPageStyle} type='select' value={count} onChange={(e) => { setCount(parseInt(e.target.value, 10)); setCurrentPage(0); }}>
                 {rowPerPageOptions && Array.isArray(rowPerPageOptions) && rowPerPageOptions.length > 0 && (rowPerPageOptions.map((opt) => {
                 const { value, text } = opt;
                 return (<option key={value} value={value}>{text}</option>);
             }))}
-            </Input>);
+            </reactstrap_1.Input>);
     };
     const renderPageButtons = (color, nextText, previousText, firstPageText, lastPageText) => {
         const defaultPageButtonsStyle = {
@@ -204,18 +235,18 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         const lastIndex = getLastIndex();
         let buttons = [];
         for (let i = firstIndex; i < lastIndex; i++) {
-            buttons.push(<Button color={color} outline={currentPage !== pageButtons[i].key} key={pageButtons[i].key} onClick={pageButtons[i].onClick}>{pageButtons[i].text}</Button>);
+            buttons.push(<reactstrap_1.Button color={color} outline={currentPage !== pageButtons[i].key} key={pageButtons[i].key} onClick={pageButtons[i].onClick}>{pageButtons[i].text}</reactstrap_1.Button>);
         }
         return (<div className='react-data-table-pagination-buttons' style={defaultPageButtonsStyle}>
-                <Button outline color={color} hidden={currentPage === 0} onClick={() => onFirstClick()}>{firstPageText}</Button>
-                <Button outline color={color} hidden={currentPage === 0} onClick={() => onPreviousClick()}>{previousText}</Button>
+                <reactstrap_1.Button outline color={color} hidden={currentPage === 0} onClick={() => onFirstClick()}>{firstPageText}</reactstrap_1.Button>
+                <reactstrap_1.Button outline color={color} hidden={currentPage === 0} onClick={() => onPreviousClick()}>{previousText}</reactstrap_1.Button>
         
                 
                 {buttons.map((butt) => {
                 return butt;
             })}
-                <Button outline color={color} hidden={currentPage === pageButtons.length - 1} onClick={() => onNextClick()}>{nextText}</Button>
-                <Button outline color={color} hidden={currentPage === pageButtons.length - 1} onClick={() => onLastClick()}>{lastPageText}</Button>
+                <reactstrap_1.Button outline color={color} hidden={currentPage === pageButtons.length - 1} onClick={() => onNextClick()}>{nextText}</reactstrap_1.Button>
+                <reactstrap_1.Button outline color={color} hidden={currentPage === pageButtons.length - 1} onClick={() => onLastClick()}>{lastPageText}</reactstrap_1.Button>
             </div>);
     };
     const renderPagination = () => {
@@ -234,28 +265,28 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
             return '';
         }
     };
-    return (<React.Fragment>
+    return (<react_1.default.Fragment>
             {renderTable()}
             {renderPagination()}
-        </React.Fragment>);
+        </react_1.default.Fragment>);
 };
-export default DataTable;
+exports.default = DataTable;
 DataTable.propTypes = {
-    className: PropTypes.string,
-    datas: PropTypes.array.isRequired,
-    columns: PropTypes.array.isRequired,
-    paginationOptions: PropTypes.shape({
-        color: PropTypes.string,
-        count: PropTypes.number.isRequired,
-        nextText: PropTypes.string,
-        previousText: PropTypes.string,
-        firstPageText: PropTypes.string,
-        lastPageText: PropTypes.string,
-        rowPerPageOptions: PropTypes.arrayOf(PropTypes.shape({
-            value: PropTypes.number.isRequired,
-            text: PropTypes.string.isRequired
+    className: prop_types_1.default.string,
+    datas: prop_types_1.default.array.isRequired,
+    columns: prop_types_1.default.array.isRequired,
+    paginationOptions: prop_types_1.default.shape({
+        color: prop_types_1.default.string,
+        count: prop_types_1.default.number.isRequired,
+        nextText: prop_types_1.default.string,
+        previousText: prop_types_1.default.string,
+        firstPageText: prop_types_1.default.string,
+        lastPageText: prop_types_1.default.string,
+        rowPerPageOptions: prop_types_1.default.arrayOf(prop_types_1.default.shape({
+            value: prop_types_1.default.number.isRequired,
+            text: prop_types_1.default.string.isRequired
         }))
     }),
-    bordered: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    striped: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+    bordered: prop_types_1.default.oneOfType([prop_types_1.default.string, prop_types_1.default.bool]),
+    striped: prop_types_1.default.oneOfType([prop_types_1.default.string, prop_types_1.default.bool])
 };
