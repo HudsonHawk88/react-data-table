@@ -1,9 +1,4 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importDefault(require("react"));
+import React from "react";
 const columns = [
     {
         dataField: 'name',
@@ -34,8 +29,8 @@ const columns = [
         dataField: 'id',
         text: 'Műveletek',
         formatter: (_cell, row) => {
-            return <react_1.default.Fragment><button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button></react_1.default.Fragment>;
+            return <React.Fragment><button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button></React.Fragment>;
         }
     }
 ];
-exports.default = columns;
+export default columns;

@@ -48,10 +48,10 @@ declare const DataTable: {
             previousText: PropTypes.Requireable<string>;
             firstPageText: PropTypes.Requireable<string>;
             lastPageText: PropTypes.Requireable<string>;
-            rowPerPageOptions: PropTypes.Requireable<(PropTypes.InferProps<{
+            rowPerPageOptions: PropTypes.Requireable<PropTypes.InferProps<{
                 value: PropTypes.Validator<number>;
                 text: PropTypes.Validator<string>;
-            }> | null | undefined)[]>;
+            }>[]>;
         }>>;
         bordered: PropTypes.Requireable<string | boolean>;
         striped: PropTypes.Requireable<string | boolean>;

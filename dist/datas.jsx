@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const datas = [
     {
         id: 0,
@@ -136,4 +134,4 @@ const datas = [
         occupation: 'designer'
     }
 ];
-exports.default = datas;
+export default datas;
