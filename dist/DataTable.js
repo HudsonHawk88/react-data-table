@@ -40,6 +40,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(require("react"));
 var reactstrap_1 = require("reactstrap");
 var prop_types_1 = __importDefault(require("prop-types"));
+require("./index.css");
+require("bootstrap/dist/css/bootstrap.min.css");
 var DataTable = function (_a) {
     var _b = _a.className, className = _b === void 0 ? 'react-data-table' : _b, datas = _a.datas, columns = _a.columns, paginationOptions = _a.paginationOptions, _c = _a.bordered, bordered = _c === void 0 ? false : _c, _d = _a.striped, striped = _d === void 0 ? false : _d;
     var _e = (0, react_1.useState)({}), filters = _e[0], setFilters = _e[1];

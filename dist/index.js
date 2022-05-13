@@ -18,8 +18,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* import datas from './datas'
 import columns from './columns'; */
-require("./index.css");
-require("bootstrap/dist/css/bootstrap.min.css");
 /* const rootDiv: any = document.getElementById('root');
 
 const root = createRoot(rootDiv);

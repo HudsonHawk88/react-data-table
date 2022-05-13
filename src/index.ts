@@ -3,8 +3,7 @@ import { createRoot } from 'react-dom/client'; */
 
 /* import datas from './datas'
 import columns from './columns'; */
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 /* const rootDiv: any = document.getElementById('root');
