@@ -5,14 +5,14 @@ const columns = [
         dataField: 'name',
         text: 'Név',
         filter: true,
-        filterType: 'text'
+        filterType: 'textFilter'
     },
     {
         dataField: 'occupation',
         text: 'Foglalkozás',
         filter: true,
         /* filterType: 'text' */
-        filterType: 'option',
+        filterType: 'optionFilter',
         filterOptions: [
             {
                 id: 'frontend developer',
@@ -29,7 +29,7 @@ const columns = [
     {
         dataField: 'id',
         text: 'Műveletek',
-        formatter: (cell: any, row: { id: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment; }) => {
+        formatter: (_cell: any, row: { id: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment; }) => {
             return <React.Fragment><button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button></React.Fragment>
         }
     }

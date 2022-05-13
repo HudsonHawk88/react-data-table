@@ -1,9 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback, CSSProperties, FunctionComponent } from 'react';
 import { Table, Input, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { any } from 'prop-types';
+
 
 interface Datas {
     length: number;
@@ -52,7 +50,7 @@ interface DataTableProps {
 
 type PageButtons = any; 
 
-type Filters = any;
+type Filters = object | any;
 
 const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }: DataTableProps) => {
     
@@ -78,13 +76,12 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         cols.forEach((col) => {
             if (col.filter) {
                 if (col.filterType === 'textFilter') {
-                    filterObj = Object.assign({[col.dataField]: ''}, filterObj)
+                    Object.assign(filterObj, {[col.dataField]: ''})
                 } else if (col.filterType === 'optionFilter') {
-                    filterObj = Object.assign({[col.dataField]: ''}, filterObj)
+                    Object.assign(filterObj, {[col.dataField]: ''})
                 }
             }
         });
-
         setFilters(filterObj);
     }, [columns])
 
@@ -107,7 +104,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         const filterType = col.filterType;
         
         switch (filterType) {
-            case 'text': {
+            case 'textFilter': {
                 const defaultValue = col.defaultValue || '';
                 return (
                     <th key={col.text}>{col.text}<br />
@@ -115,7 +112,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
                     </th>
                 );
             }
-            case 'option': {
+            case 'optionFilter': {
                 const filterOptions = col.filterOptions || [];
                 const defaultValue = col.defaultValue || 'Kérjük válasszon...';
 
@@ -155,6 +152,8 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         } 
         if (ccc && ccc.filterType === 'optionFilter') {
             return rowData[key] !== filters[key];
+        } else {
+            return undefined
         }
     }, [columns, filters]);
 
@@ -300,7 +299,7 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         }
 
         return (
-            <Input className='react-data-table-pagination-rowperpage' style={defaultRowPerPageStyle} type='select' value={count} onChange={(e) => { setCount(parseInt(e.target.value, 10)); setCurrentPage(0) }}>
+            <Input className='react-data-table-pagination-rowperpage' style={defaultRowPerPageStyle} type='select' value={count} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setCount(parseInt(e.target.value, 10)); setCurrentPage(0) }}>
                 {rowPerPageOptions && Array.isArray(rowPerPageOptions) && rowPerPageOptions.length > 0 && (
                     rowPerPageOptions.map((opt) => {
                         const { value, text } = opt;
@@ -356,6 +355,8 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
                     {renderPageButtons(color, nextText, previousText, firstPageText, lastPageText)}
                 </div>
             );
+        } else {
+            return ''
         }
     }
 
