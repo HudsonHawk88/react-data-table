@@ -1,13 +1,12 @@
 {
   "name": "@inftechsol/react-data-table",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "author": {
     "name": "Gergő Tóth",
     "email": "info@inftechsol.hu",
     "url": "https://inftechsol.hu"
   },
   "main": "./dist/index.jsx",
-  "module": "./dist/index.jsx",
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
