@@ -29,7 +29,7 @@ const columns = [
     {
         dataField: 'id',
         text: 'Műveletek',
-        formatter: (_cell: any, row: { id: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment; }) => {
+        formatter: (cell, row) => {
             return <React.Fragment><button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button>&nbsp;&nbsp;<button>{row.id}</button></React.Fragment>
         }
     }

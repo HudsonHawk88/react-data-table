@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client'; */
 
 /* import datas from './datas'
 import columns from './columns'; */
-import DataTable from './DataTable';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 /* const rootDiv: any = document.getElementById('root');
 
@@ -30,8 +30,7 @@ const paginationOptions = {
 }
 root.render(<DataTable bordered datas={datas} columns={columns} paginationOptions={paginationOptions} />); */
 
-
-export { DataTable }
+export * from './DataTable';
 
 
 
