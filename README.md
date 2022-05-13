@@ -1,5 +1,9 @@
 # @inftechsol/react-data-table
 
+## About component
+
+It is a simle data-table component with filtering (option filter and text filter) and pagination. The filtering and the pagination is basically customizeable.
+
 ## Compatibility
 
 This component use [React v18.1.0](https://www.npmjs.com/package/react "React v18.1.0"), [react-dom v18.1.0](https://www.npmjs.com/package/react-dom "React DOM v18.1.0"), [Bootstrap v5.1.3](https://www.npmjs.com/package/bootstrap "Bootstrap v5.1.3") and [reactstrap v9.0.2](https://www.npmjs.com/package/reactstrap "Reactstrap v9.0.2").
