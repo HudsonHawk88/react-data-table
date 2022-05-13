@@ -1,70 +1,129 @@
-# Getting Started with Create React App
+# @inftechsol/react-data-table
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+npm i @inftechsol/react-data-table
 
-### `npm start`
+## Basic usage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```jsx
+import React from 'react';
+import DataTable from '@inftechsol/react-data-table';
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+const Table = () => {
 
-### `npm test`
+    const datas = [
+        {
+            id: 0,
+            name: 'John Smith',
+            age: 36,
+            occupation: 'developer'
+        },
+        {
+            id: 1,
+            name: 'Jane Doe',
+            age: 25,
+            occupation: 'developer'
+        },
+        {
+            id: 2,
+            name: 'Patric Smith',
+            age: 42,
+            occupation: 'HR manager'
+        },
+        {
+            id: 3,
+            name: 'Elizabeth Carter',
+            age: 25,
+            occupation: 'PR manager'
+        },
+        {
+            id: 4,
+            name: 'Daniel Peterson',
+            age: 33,
+            occupation: 'CEO'
+        },
+        {
+            id: 5,
+            name: 'Howard Long',
+            age: 52,
+            occupation: 'IT specialist'
+        },
+        {
+            id: 6,
+            name: 'Eva Porter',
+            age: 33,
+            occupation: 'secretary'
+        }
+    ];
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    const columns = [
+        {
+            dataField: 'name',
+            text: 'Name'
+        },
+        {
+            dataField: 'age',
+            text: 'Age'
+        },
+        {
+            dataField: 'occupation',
+            text: 'Occupation'
+        },
+        {
+            dataField: 'id',
+            text: 'ID'
+        }
+    ];
 
-### `npm run build`
+    return (
+        <DataTable columns={columns} datas={datas} />
+    )
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+export default Table;
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
 
-### `npm run eject`
+## Properties
+    - DataTable properties:
+        - datas: Array (required),
+        - columns: Array (required) [
+            - column properties
+                - dataField: string (required),
+                - text: string (required),
+                - filter: boolean (optional),
+                - filterType: 'textFilter' || 'optionFilter' (required if filter is true),
+                - filterOptions: Array (required if filter is true) [
+                    {
+                        - filterOptions properties:
+                            - id: string || number
+                            - value: string || number
+                            - text: string
+                    }
+                ],
+                - formatter: () => void (optional) // returns elements (it goes between <td> and </td>) 
+        ]
+        - className: string (optional) // default: 'react-data-table',
+        - bordered: boolean (optional),
+        - striped: boolean (optional),
+        - paginationOptions: object {
+            paginationOptions properties: 
+                - color: string (optional) => bootstrap 5 colors // 'success', 'warning', 'info', 'danger', 'primary', 'secondary', 'dark' // default: 'secondary',
+                - count: number (required if paginationOptions passed) ==> row / page number,
+                - nextText: string (optional) ==> next page button text // default: '>',
+                - previousText: string (optional) ==> previous page button text // default: '<',
+                - firstPageText: string (optional) ==> Back to the first page button text // dafault: '<<',
+                - lastPageText: string (optional) ==> Go to the last page button text  // default: '>>',
+                - rowPerPageOptions: array (required if paginationOptions passed) ==> Select inputoptions to change row per page [
+                    {
+                        rowPerPageOptions properties: 
+                            - value: number,
+                            - text: string
+                    }
+                ]
+        }
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
