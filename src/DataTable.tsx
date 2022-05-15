@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback, CSSProperties, FunctionComponent } from 'react';
 import { Table, Input, Button } from 'reactstrap';
 
-import './styles/index.css';
+import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface Datas {

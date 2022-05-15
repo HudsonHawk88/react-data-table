@@ -25,7 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const reactstrap_1 = require("reactstrap");
-require("./styles/index.css");
+require("./index.css");
 require("bootstrap/dist/css/bootstrap.min.css");
 const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }) => {
     const [filters, setFilters] = (0, react_1.useState)({});
