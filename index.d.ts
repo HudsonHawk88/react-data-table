@@ -1,1 +1,2 @@
-export * from './DataTable';
+import DataTable from "./dist/DataTable";
+export default DataTable;

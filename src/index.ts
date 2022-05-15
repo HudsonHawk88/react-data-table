@@ -1,6 +1,8 @@
 /* import React from 'react';
 import { createRoot } from 'react-dom/client'; */
 
+import DataTable from "./DataTable";
+
 /* import datas from './datas'
 import columns from './columns'; */
 
@@ -29,7 +31,7 @@ const paginationOptions = {
 }
 root.render(<DataTable bordered datas={datas} columns={columns} paginationOptions={paginationOptions} />); */
 
-export * from './DataTable';
+export default DataTable;
 
 
 
