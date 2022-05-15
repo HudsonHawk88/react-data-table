@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import './index.css';
+import './styles/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 interface FilterOptions {
     id: number | string;
