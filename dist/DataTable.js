@@ -29,8 +29,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const reactstrap_1 = require("reactstrap");
 const prop_types_1 = __importDefault(require("prop-types"));
-require("./index.css");
-require("bootstrap/dist/css/bootstrap.min.css");
 const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }) => {
     const [filters, setFilters] = (0, react_1.useState)({});
     const [filtered, setFiltered] = (0, react_1.useState)([]);
@@ -274,4 +272,3 @@ DataTable.propTypes = {
     bordered: prop_types_1.default.oneOfType([prop_types_1.default.string, prop_types_1.default.bool]),
     striped: prop_types_1.default.oneOfType([prop_types_1.default.string, prop_types_1.default.bool])
 };
-//# sourceMappingURL=DataTable.js.map

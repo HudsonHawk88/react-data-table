@@ -2,9 +2,6 @@ import React, { useState, useMemo, useEffect, useCallback, CSSProperties, Functi
 import { Table, Input, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 interface Datas {
     length: number;
     map(arg0: (row: any) => JSX.Element): React.ReactNode;
