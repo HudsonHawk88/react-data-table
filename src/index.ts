@@ -1,14 +1,12 @@
 /* import React from 'react';
 import { createRoot } from 'react-dom/client'; */
 
-import DataTable from "./DataTable";
-
 /* import datas from './datas'
-import columns from './columns'; */
+import columns from './columns';
 
 
 
-/* const rootDiv: any = document.getElementById('root');
+const rootDiv: any = document.getElementById('root');
 
 const root = createRoot(rootDiv);
 
@@ -29,9 +27,10 @@ const paginationOptions = {
         },
     ]
 }
+
 root.render(<DataTable bordered datas={datas} columns={columns} paginationOptions={paginationOptions} />); */
 
-export default DataTable;
+export { default } from './DataTable';
 
 
 
