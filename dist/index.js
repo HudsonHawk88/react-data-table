@@ -1,9 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const DataTable_1 = __importDefault(require("./DataTable"));
+const DataTable_1 = require("./DataTable");
 require("./index.css");
 require("bootstrap/dist/css/bootstrap.min.css");
-exports.default = DataTable_1.default;
+exports.default = DataTable_1.DataTable;

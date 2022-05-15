@@ -26,6 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DataTable = void 0;
 const react_1 = __importStar(require("react"));
 const reactstrap_1 = require("reactstrap");
 const prop_types_1 = __importDefault(require("prop-types"));
@@ -252,8 +253,8 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         renderTable(),
         renderPagination()));
 };
-exports.default = DataTable;
-DataTable.propTypes = {
+exports.DataTable = DataTable;
+exports.DataTable.propTypes = {
     className: prop_types_1.default.string,
     datas: prop_types_1.default.array.isRequired,
     columns: prop_types_1.default.array.isRequired,

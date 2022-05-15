@@ -35,7 +35,7 @@ interface DataTableProps {
     bordered?: boolean;
     striped?: boolean;
 }
-declare const DataTable: {
+export declare const DataTable: {
     ({ className, datas, columns, paginationOptions, bordered, striped }: DataTableProps): JSX.Element;
     propTypes: {
         className: PropTypes.Requireable<string>;
@@ -57,4 +57,4 @@ declare const DataTable: {
         striped: PropTypes.Requireable<string | boolean>;
     };
 };
-export default DataTable;
+export {};
