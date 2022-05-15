@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rm -rf ./dist && tsc && mkdir ./dist/styles && cp ./src/styles/index.css dist/styles/",
+    "build": "rm -rf ./lib && tsc && mkdir ./lib/styles && cp ./src/styles/index.css lib/styles/",
     "pub": "npm publish --access public",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
