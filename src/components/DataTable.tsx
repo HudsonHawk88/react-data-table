@@ -52,7 +52,7 @@ type PageButtons = any;
 
 type Filters = object | any;
 
-const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }: DataTableProps) => {
+export const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }: DataTableProps) => {
     const [filters, setFilters] = useState<Filters>({});
     const [filtered, setFiltered] = useState<Datas>([]);
     const [count, setCount] = useState(paginationOptions && paginationOptions.count ? paginationOptions.count : 5);
@@ -389,5 +389,3 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         </React.Fragment>
     );
 };
-
-export default DataTable;
