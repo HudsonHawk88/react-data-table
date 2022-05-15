@@ -1,6 +1,6 @@
 {
   "name": "@inftechsol/react-data-table",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "author": {
     "name": "Gergő Tóth",
     "email": "info@inftechsol.hu",
@@ -33,7 +33,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "rm -rf ./dist && tsc && mkdir ./dist/styles && cp ./src/styles/index.css dist/styles/",
-    "publish": "npm publish --access public",
+    "pub": "npm publish --access public",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
