@@ -1,6 +1,11 @@
+"use strict";
 /* import React from 'react';
 import { createRoot } from 'react-dom/client'; */
-import DataTable from "./DataTable";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const DataTable_1 = __importDefault(require("./DataTable"));
 /* import datas from './datas'
 import columns from './columns'; */
 /* const rootDiv: any = document.getElementById('root');
@@ -25,5 +30,5 @@ const paginationOptions = {
     ]
 }
 root.render(<DataTable bordered datas={datas} columns={columns} paginationOptions={paginationOptions} />); */
-export default DataTable;
+exports.default = DataTable_1.default;
 //# sourceMappingURL=index.js.map
