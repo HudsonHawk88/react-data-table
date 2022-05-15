@@ -22,14 +22,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataTable = void 0;
 const react_1 = __importStar(require("react"));
 const reactstrap_1 = require("reactstrap");
-const prop_types_1 = __importDefault(require("prop-types"));
+require("./index.css");
+require("bootstrap/dist/css/bootstrap.min.css");
 const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }) => {
     const [filters, setFilters] = (0, react_1.useState)({});
     const [filtered, setFiltered] = (0, react_1.useState)([]);
@@ -253,23 +250,4 @@ const DataTable = ({ className = 'react-data-table', datas, columns, paginationO
         renderTable(),
         renderPagination()));
 };
-exports.DataTable = DataTable;
-exports.DataTable.propTypes = {
-    className: prop_types_1.default.string,
-    datas: prop_types_1.default.array.isRequired,
-    columns: prop_types_1.default.array.isRequired,
-    paginationOptions: prop_types_1.default.shape({
-        color: prop_types_1.default.string,
-        count: prop_types_1.default.number.isRequired,
-        nextText: prop_types_1.default.string,
-        previousText: prop_types_1.default.string,
-        firstPageText: prop_types_1.default.string,
-        lastPageText: prop_types_1.default.string,
-        rowPerPageOptions: prop_types_1.default.arrayOf(prop_types_1.default.shape({
-            value: prop_types_1.default.number.isRequired,
-            text: prop_types_1.default.string.isRequired
-        }))
-    }),
-    bordered: prop_types_1.default.oneOfType([prop_types_1.default.string, prop_types_1.default.bool]),
-    striped: prop_types_1.default.oneOfType([prop_types_1.default.string, prop_types_1.default.bool])
-};
+exports.default = DataTable;

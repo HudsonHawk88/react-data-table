@@ -68,7 +68,9 @@ const Table = () => {
     const columns = [
         {
             dataField: 'name',
-            text: 'Name'
+            text: 'Name',
+            filter: true,
+            filterType: 'textFilter'
         },
         {
             dataField: 'age',
@@ -76,13 +78,54 @@ const Table = () => {
         },
         {
             dataField: 'occupation',
-            text: 'Occupation'
+            text: 'Occupation',
+            filter: true,
+            filterType: 'optionFilter',
+            filterOptions: [
+                {
+                    id: 0,
+                    value: 'developer',
+                    text: 'developer'
+                },
+                {
+                    id: 1,
+                    value: 'HR manager',
+                    text: 'HR manager'
+                },
+                {
+                    id: 2,
+                    value: 'PR manager',
+                    text: 'PR manager'
+                },
+                {
+                    id: 3,
+                    value: 'CEO',
+                    text: 'CEO'
+                },
+                {
+                    id: 4,
+                    value: 'IT specialist',
+                    text: 'IT specialist'
+                },
+                {
+                    id: 5,
+                    value: 'secretary',
+                    text: 'secretary'
+                }
+            ]
         },
         {
             dataField: 'id',
-            text: 'ID'
+            text: 'ID',
+            formatter: (cell, row) => {
+                return (
+                    <button type='button' key={row.id}>{row.id}</button>
+                );
+            }
         }
     ];
+
+
 
     return (
         <DataTable columns={columns} datas={datas} />

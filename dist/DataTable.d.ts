@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 interface FilterOptions {
     id: number | string;
     value: number | string;
@@ -35,26 +36,5 @@ interface DataTableProps {
     bordered?: boolean;
     striped?: boolean;
 }
-export declare const DataTable: {
-    ({ className, datas, columns, paginationOptions, bordered, striped }: DataTableProps): JSX.Element;
-    propTypes: {
-        className: PropTypes.Requireable<string>;
-        datas: PropTypes.Validator<any[]>;
-        columns: PropTypes.Validator<any[]>;
-        paginationOptions: PropTypes.Requireable<PropTypes.InferProps<{
-            color: PropTypes.Requireable<string>;
-            count: PropTypes.Validator<number>;
-            nextText: PropTypes.Requireable<string>;
-            previousText: PropTypes.Requireable<string>;
-            firstPageText: PropTypes.Requireable<string>;
-            lastPageText: PropTypes.Requireable<string>;
-            rowPerPageOptions: PropTypes.Requireable<PropTypes.InferProps<{
-                value: PropTypes.Validator<number>;
-                text: PropTypes.Validator<string>;
-            }>[]>;
-        }>>;
-        bordered: PropTypes.Requireable<string | boolean>;
-        striped: PropTypes.Requireable<string | boolean>;
-    };
-};
-export {};
+declare const DataTable: ({ className, datas, columns, paginationOptions, bordered, striped }: DataTableProps) => JSX.Element;
+export default DataTable;

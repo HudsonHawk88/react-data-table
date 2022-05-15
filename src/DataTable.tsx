@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useEffect, useCallback, CSSProperties, FunctionComponent } from 'react';
 import { Table, Input, Button } from 'reactstrap';
-import PropTypes from 'prop-types';
+
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface Datas {
     length: number;
@@ -51,7 +53,7 @@ type PageButtons = any;
 
 type Filters = object | any;
 
-export const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }: DataTableProps) => {
+const DataTable = ({ className = 'react-data-table', datas, columns, paginationOptions, bordered = false, striped = false }: DataTableProps) => {
     
     const [ filters, setFilters ] = useState<Filters>({});
     const [ filtered, setFiltered ] = useState<Datas>([]);
@@ -367,22 +369,4 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
     );
 }
 
-DataTable.propTypes = {
-    className: PropTypes.string,
-    datas: PropTypes.array.isRequired,
-    columns: PropTypes.array.isRequired,
-    paginationOptions: PropTypes.shape({
-        color: PropTypes.string,
-        count: PropTypes.number.isRequired,
-        nextText: PropTypes.string,
-        previousText: PropTypes.string,
-        firstPageText: PropTypes.string,
-        lastPageText: PropTypes.string,
-        rowPerPageOptions: PropTypes.arrayOf(PropTypes.shape({
-            value: PropTypes.number.isRequired,
-            text: PropTypes.string.isRequired
-        }))
-    }),
-    bordered: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    striped: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
-};
+export default DataTable;
