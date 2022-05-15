@@ -29,10 +29,10 @@
     // "baseUrl": "./dist/",                                  /* Specify the base directory to resolve non-relative module names. */
     // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
-    "typeRoots": [
+/*     "typeRoots": [
       "index.d.ts",
       "node_modules/@types"
-    ],                                  /* Specify multiple folders that act like `./node_modules/@types`. */
+    ],    */                               /* Specify multiple folders that act like `./node_modules/@types`. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
     // "allowUmdGlobalAccess": true,                     /* Allow accessing UMD globals from modules. */
     "resolveJsonModule": true,                        /* Enable importing .json files */
@@ -101,8 +101,9 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "./src/**/*.tsx",
-    "./src/**/*.ts"
+    "src/DataTable.tsx",
+    "src/index.ts",
+    "src/index.css"
   ],
   "exclude": ["node_modules"]
 }

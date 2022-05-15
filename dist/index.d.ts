@@ -1,1 +1,2 @@
-export { default } from './DataTable';
+import DataTable from './DataTable';
+export default DataTable;
