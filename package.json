@@ -1,13 +1,13 @@
 {
   "name": "@inftechsol/react-data-table",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "author": {
     "name": "Gergő Tóth",
     "email": "info@inftechsol.hu",
     "url": "https://inftechsol.hu"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/HudsonHawk88/react-data-table"
