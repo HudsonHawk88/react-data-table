@@ -101,9 +101,7 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src/DataTable.tsx",
-    "src/index.ts",
-    "src/index.css"
+    "src",
   ],
   "exclude": ["node_modules"]
 }
