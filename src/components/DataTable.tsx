@@ -103,7 +103,7 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
 
         switch (filterType) {
             case 'textFilter': {
-                const defaultValue = col.defaultValue || '';
+                const defaultValue = col.filterDefaultValue || '';
                 return (
                     <th key={col.text}>
                         {col.text}
@@ -114,14 +114,14 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
             }
             case 'optionFilter': {
                 const filterOptions = col.filterOptions || [];
-                const defaultValue = col.defaultValue || 'Kérjük válasszon...';
+                const defaultValue = col.filterDefaultValue || 'Kérjük válasszon...';
 
                 return (
                     <th key={col.text}>
                         {col.text}
                         <br />
                         <Input name={col.dataField} type="select" onChange={handleFilterChange}>
-                            <option key={'filter_' + filterOptions.id} value="">
+                            <option key={'filter_default_' + col.dataField} value="">
                                 {defaultValue}
                             </option>
                             {filterOptions.map((filterOption: any) => {

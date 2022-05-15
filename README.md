@@ -6,7 +6,8 @@ It is a simle data-table component with filtering (option filter and text filter
 
 ## Compatibility
 
-This component use [React v18.1.0](https://www.npmjs.com/package/react "React v18.1.0"), [react-dom v18.1.0](https://www.npmjs.com/package/react-dom "React DOM v18.1.0"), [Bootstrap v5.1.3](https://www.npmjs.com/package/bootstrap "Bootstrap v5.1.3") and [reactstrap v9.0.2](https://www.npmjs.com/package/reactstrap "Reactstrap v9.0.2").
+This component use [React v18.1.0](https://www.npmjs.com/package/react 'React v18.1.0'), [react-dom v18.1.0](https://www.npmjs.com/package/react-dom 'React DOM v18.1.0'),
+[Bootstrap v5.1.3](https://www.npmjs.com/package/bootstrap 'Bootstrap v5.1.3') and [reactstrap v9.0.2](https://www.npmjs.com/package/reactstrap 'Reactstrap v9.0.2').
 
 ## Installation
 
@@ -16,10 +17,9 @@ npm i @inftechsol/react-data-table
 
 ```jsx
 import React from 'react';
-import DataTable from '@inftechsol/react-data-table';
+import { DataTable } from '@inftechsol/react-data-table';
 
-const Table = () => {
-
+const App = () => {
     const datas = [
         {
             id: 0,
@@ -119,25 +119,22 @@ const Table = () => {
             text: 'ID',
             formatter: (cell, row) => {
                 return (
-                    <button type='button' key={row.id}>{row.id}</button>
+                    <button type="button" key={row.id}>
+                        {row.id}
+                    </button>
                 );
             }
         }
     ];
 
+    return <DataTable columns={columns} datas={datas} />;
+};
 
-
-    return (
-        <DataTable columns={columns} datas={datas} />
-    )
-
-}
-
-export default Table;
-
+export default App;
 ```
 
 ## Properties
+
     - DataTable properties:
         - datas: Array (required),
         - columns: Array (required) [
@@ -146,6 +143,7 @@ export default Table;
                 - text: string (required),
                 - filter: boolean (optional),
                 - filterType: 'textFilter' || 'optionFilter' (required if filter is true),
+                - filterDefaultValue: string (optional) ==> Filterinput default value or placeholder,
                 - filterOptions: Array (required if filter is true) [
                     {
                         - filterOptions properties:
@@ -154,13 +152,13 @@ export default Table;
                             - text: string
                     }
                 ],
-                - formatter: () => void (optional) // returns elements (it goes between <td> and </td>) 
+                - formatter: () => void (optional) // returns elements (it goes between <td> and </td>)
         ]
         - className: string (optional) // default: 'react-data-table',
         - bordered: boolean (optional),
         - striped: boolean (optional),
         - paginationOptions: object {
-            paginationOptions properties: 
+            paginationOptions properties:
                 - color: string (optional) => bootstrap 5 colors // 'success', 'warning', 'info', 'danger', 'primary', 'secondary', 'dark' // default: 'secondary',
                 - count: number (required if paginationOptions passed) ==> row / page number,
                 - nextText: string (optional) ==> next page button text // default: '>',
@@ -169,11 +167,9 @@ export default Table;
                 - lastPageText: string (optional) ==> Go to the last page button text  // default: '>>',
                 - rowPerPageOptions: array (required if paginationOptions passed) ==> Select inputoptions to change row per page [
                     {
-                        rowPerPageOptions properties: 
+                        rowPerPageOptions properties:
                             - value: number,
                             - text: string
                     }
                 ]
         }
-
-
