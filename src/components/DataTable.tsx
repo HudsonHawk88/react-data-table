@@ -244,7 +244,7 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
 
         if (col && row && !hidden) {
             if (formatter && typeof formatter === 'function') {
-                return <td key={'cell_' + row.id}>{col.formatter(col, row)}</td>;
+                return <td key={'cell_' + name + row.id}>{col.formatter(col, row)}</td>;
             } else {
                 return <td key={'cell_' + name + row.id}>{row[name]}</td>;
             }
