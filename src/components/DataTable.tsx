@@ -155,12 +155,14 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
 
     const getFilterClause = useCallback(
         (key: any, rowData: any) => {
+            const adat = rowData[key] + '';
+            const filt = filters[key] + '';
             const ccc = columns.find((c) => c['dataField'] === key);
             if (ccc && ccc.filterType === 'textFilter') {
-                return rowData[key].toLowerCase().indexOf(filters[key].toLowerCase()) === -1;
+                return adat.toLowerCase().indexOf(filt.toLowerCase()) === -1;
             }
             if (ccc && ccc.filterType === 'optionFilter') {
-                return rowData[key] !== filters[key];
+                return adat !== filt;
             } else {
                 return undefined;
             }
