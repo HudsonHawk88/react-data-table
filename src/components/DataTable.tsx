@@ -89,7 +89,7 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
     }, [setDefaultFilters]);
 
     useEffect(() => {
-        if (filtered.length % count === 0) {
+        if (filtered.length % count === 0 && filtered.length !== count) {
             setCurrentPage((prevState) => prevState - 1);
         }
     }, [filtered.length, count]);
