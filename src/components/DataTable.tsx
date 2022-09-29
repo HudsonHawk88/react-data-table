@@ -88,6 +88,12 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
         setDefaultFilters();
     }, [setDefaultFilters]);
 
+    useEffect(() => {
+        if (filtered.length % count === 0) {
+            setCurrentPage((prevState) => prevState - 1);
+        }
+    }, [filtered.length, count]);
+
     const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { target } = e;
         const { name, value } = target;
