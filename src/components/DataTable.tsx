@@ -89,10 +89,10 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
     }, [setDefaultFilters]);
 
     useEffect(() => {
-        if (filtered.length % count === 0 && filtered.length !== count) {
+        if (filtered.length % count === 0 && filtered.length !== count && currentPage > 0) {
             setCurrentPage((prevState) => prevState - 1);
         }
-    }, [filtered.length, count]);
+    }, [filtered.length, count, currentPage]);
 
     const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { target } = e;
