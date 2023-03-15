@@ -165,7 +165,7 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
             const filt = filters[key] + '';
             const ccc = columns.find((c) => c['dataField'] === key);
             if (ccc && ccc.filterType === 'textFilter') {
-                return adat.toLowerCase().indexOf(filt.trim().toLowerCase()) === -1;
+                return adat.trim().toLowerCase().indexOf(filt.toLowerCase()) === -1;
             }
             if (ccc && ccc.filterType === 'optionFilter') {
                 return adat !== filt;
