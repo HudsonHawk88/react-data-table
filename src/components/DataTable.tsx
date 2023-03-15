@@ -60,7 +60,7 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
     const [currentPage, setCurrentPage] = useState(0);
     const [pageButtons, setPageButtons] = useState<PageButtons>([]);
 
-    useEffect(() => {
+    useMemo(() => {
         setFiltered(datas);
         /* if (paginationOptions) {
             setCount(paginationOptions.count || 5);
