@@ -111,6 +111,7 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
             case 'textFilter': {
                 const defaultValue = col.filterDefaultValue || '';
                 if (filters && filters[col.dataField]) {
+                    console.log('hasValue');
                     return (
                         <th key={col.text}>
                             {col.text}
@@ -119,6 +120,7 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
                         </th>
                     );
                 } else {
+                    console.log('noValue');
                     return (
                         <th key={col.text}>
                             {col.text}
