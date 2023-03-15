@@ -243,16 +243,16 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
         createPageButtons(filteredData);
     }, [filteringData, handlePageChange, createPageButtons]);
 
-    const renderCell = (col: any, row: any) => {
+    const renderCell = (col: any, row: any, index: any) => {
         const { formatter, hidden } = col;
         const name = col['dataField'];
         let cell = '';
 
         if (col && row && !hidden) {
             if (formatter && typeof formatter === 'function') {
-                return <td key={'cell_' + name + row.id}>{col.formatter(col, row)}</td>;
+                return <td key={'cell_' + name + '_' + index + '_' + row.id}>{col.formatter(col, row)}</td>;
             } else {
-                return <td key={'cell_' + name + row.id}>{row[name]}</td>;
+                return <td key={'cell_' + name + '_' + index + '_' + row.id}>{row[name]}</td>;
             }
         }
 
@@ -263,8 +263,8 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
         const row = r || {};
         const cols = columns || [];
 
-        return cols.map((col) => {
-            return renderCell(col, row);
+        return cols.map((col, index) => {
+            return renderCell(col, row, index);
         });
     };
 
