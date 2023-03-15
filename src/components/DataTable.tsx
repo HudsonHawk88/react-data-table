@@ -167,7 +167,6 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
             if (ccc && ccc.filterType === 'textFilter') {
                 adat = adat.replace(/\s/g, '');
                 adat = adat.toLowerCase();
-                console.log('ADAT: ', adat.toLowerCase());
                 return adat.indexOf(filt.toLowerCase()) === -1;
             }
             if (ccc && ccc.filterType === 'optionFilter') {
