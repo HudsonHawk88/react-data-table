@@ -6,7 +6,7 @@ import '../styles/index.css';
 
 interface Datas {
     length: number;
-    map(arg0: (row: any) => JSX.Element): React.ReactNode;
+    map(arg0: (row: any, index: any) => JSX.Element): React.ReactNode;
 }
 
 interface FilterOptions {
@@ -274,8 +274,8 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
             <Table className={className} striped={striped ? striped : false} bordered={bordered ? bordered : false}>
                 <thead>{renderHeaderCells()}</thead>
                 <tbody>
-                    {rows.map((row: any) => {
-                        return <tr key={'row_' + row.id}>{renderCells(row)}</tr>;
+                    {rows.map((row: any, index: any) => {
+                        return <tr key={'row_' + index + '_' + row.id}>{renderCells(row)}</tr>;
                     })}
                 </tbody>
             </Table>
