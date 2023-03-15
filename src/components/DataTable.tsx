@@ -75,9 +75,9 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
         cols.forEach((col) => {
             if (col.filter) {
                 if (col.filterType === 'textFilter') {
-                    Object.assign(filterObj, { [col.dataField]: '' });
+                    Object.assign(filterObj, { [col.dataField]: undefined });
                 } else if (col.filterType === 'optionFilter') {
-                    Object.assign(filterObj, { [col.dataField]: '' });
+                    Object.assign(filterObj, { [col.dataField]: undefined });
                 }
             }
         });
@@ -110,25 +110,13 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
         switch (filterType) {
             case 'textFilter': {
                 const defaultValue = col.filterDefaultValue || '';
-                if (filters && filters[col.dataField]) {
-                    console.log('hasValue');
-                    return (
-                        <th key={col.text}>
-                            {col.text}
-                            <br />
-                            <Input name={col.dataField} type="text" placeholder={defaultValue} value={filters[col.dataField]} onChange={handleFilterChange} />
-                        </th>
-                    );
-                } else {
-                    console.log('noValue');
-                    return (
-                        <th key={col.text}>
-                            {col.text}
-                            <br />
-                            <Input name={col.dataField} type="text" placeholder={defaultValue} defaultValue={''} />
-                        </th>
-                    );
-                }
+                return (
+                    <th key={col.text}>
+                        {col.text}
+                        <br />
+                        <Input name={col.dataField} type="text" placeholder={defaultValue} value={filters[col.dataField]} onChange={handleFilterChange} />
+                    </th>
+                );
             }
             case 'optionFilter': {
                 const filterOptions = col.filterOptions || [];
@@ -193,7 +181,7 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
         newDatas = datas.filter((rowData) => {
             let res = true;
             for (let key in filters) {
-                if (filters[key] !== '') {
+                if (filters[key] !== '' && filters[key] !== undefined) {
                     if (getFilterClause(key, rowData)) {
                         res = false;
                     }
