@@ -114,7 +114,7 @@ export const DataTable = ({ className = 'react-data-table', datas, columns, pagi
                     <th key={col.text}>
                         {col.text}
                         <br />
-                        <Input name={col.dataField} type="text" placeholder={defaultValue} value={filters[col.dataField]} onChange={handleFilterChange} />
+                        <Input name={col.dataField} type="text" placeholder={defaultValue} value={filters[col.dataField] || ''} onChange={handleFilterChange} />
                     </th>
                 );
             }
